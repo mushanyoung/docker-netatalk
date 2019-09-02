@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DOCKER_IMAGE_NAME=mushanyoung/docker-netatalk
+
+docker build -t $DOCKER_IMAGE_NAME "$(dirname $0)"
+
+if type container-structure-test >/dev/null; then
+  container-structure-test test -i $DOCKER_IMAGE_NAME -c "$(dirname $0)/cst.yaml"
+else
+  echo Install container-structure-test to enable test.
+  echo https://github.com/GoogleContainerTools/container-structure-test
+fi

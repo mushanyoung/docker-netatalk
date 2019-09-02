@@ -1,0 +1,17 @@
+schemaVersion: "2.0.0"
+
+# https://github.com/GoogleContainerTools/container-structure-test
+
+metadataTest:
+  exposedPorts: ["548"]
+  volumes: ["/conf", "/data", "/timemachine"]
+  entrypoint: ["/init"]
+
+fileExistenceTests:
+  - name: '/init'
+    path: '/init'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: '/afp.conf'
+    path: '/afp.conf'
+    shouldExist: true

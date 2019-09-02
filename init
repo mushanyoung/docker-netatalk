@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+USER=${USER:-afp}
+PASSWORD=${PASSWORD:-afp}
+PUID=${PUID:-1000}
+
+if ! id -u ${USER} &>/dev/null; then
+  adduser -u ${PUID} -H -D -g '' "${USER}"
+  echo "${USER}:${PASSWORD}" | chpasswd
+fi
+
+[ -f /conf/afp.conf ] || cp /afp.conf /conf/afp.conf
+cp /conf/afp.conf /etc/afp.conf
+sed -i'' -e "s/%USER%/${USER}/g" /etc/afp.conf
+
+chown ${USER}:${USER} /data /timemachine /conf/afp.conf
+
+rm -f /var/run/lock/netatalk
+
+exec "$@"
