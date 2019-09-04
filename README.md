@@ -15,7 +15,7 @@ Dockerized minimal netatalk daemon service with authentication.
 
 ```
 $ docker run -d --name afp \
-    -p 548:548 \
+    -p 548:548/tcp \
     -v %CONFIG_DIR%:/conf \
     -v %DATA_DIR%:/data \
     -v %TIMEMACHINE_DIR%:/timemachine \
@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
     network_mode: "bridge"
     ports:
-      - "548:548"
+      - "548:548/tcp"
     volumes:
       - /%CONFIG_DIR%:/conf
       - /%DATA_DIR%:/data
